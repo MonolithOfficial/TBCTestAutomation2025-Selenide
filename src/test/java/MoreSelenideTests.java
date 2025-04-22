@@ -2,6 +2,7 @@ import com.codeborne.selenide.*;
 import com.codeborne.selenide.ex.FileNotDownloadedError;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -51,18 +52,47 @@ public class MoreSelenideTests {
         }
     }
 
+    public void complexSendKeys() {
+        open("https://redbubble.com");
+        SelenideElement searchBar = $x("//input[@type='search']");
+
+        searchBar.sendKeys("Search query");
+
+        actions()
+                .keyDown(Keys.CONTROL)
+                .sendKeys("a")
+                .keyUp(Keys.CONTROL)
+                .keyDown(Keys.BACK_SPACE)
+                .keyUp(Keys.BACK_SPACE)
+                .build()
+                .perform();
+    }
+
     @Test
     public void filterTest() {
-        open("https://the-internet.herokuapp.com/download");
+        open("https://www.telerik.com/support/demos");
 
-        ElementsCollection anchorTags = $$x("//div[@id='content']//a");
-        SelenideElement manualTestDocx = anchorTags.find(Condition.exactText("Manual Tester.docx"));
+        // find (დააკვირდით, რომ find(WebElementCondition condition) მეთოდი წვდომადია ElementsCollection ობიექტებიდან მხოლოდ,
+        // პარამეტრად იღებს WebElementCondition-ს, აბრუნებს SelenideElement).
+        // როდის ვიყენებთ? - როდესაც გვაქვს კოლექცია და გვინდა იქიდან რამე ერთი ელემენტი ამოვიღოთ რაღაც კონდიციის საფუძველზე.
+        SelenideElement navBar = $x("//div[@data-tlrk-plugin='navspy']"); // მოგვაქვს ნავბარი
+        SelenideElement desktopLink = navBar
+                .$$(byTagName("a")) // მოგვაქვს ყველა ენქორ ტეგი
+                .find(Condition.exactText("Desktop")); // ვიღებთ იმ ენქორ ტეგს, რომლის ტექსტი არის ზუსტად 'Desktop'
 
-        SelenideElement containerDiv = $x("//div[@id='content']//div[@class='example']");
-        ElementsCollection anchorTags2 = containerDiv.findAll(byTagName("a"));
+        // findAll (დააკვირდით, რომ findAll მეთდი წვდომადია SelenideElement ობიექტებიდან მხოლოდ,
+        // პარამეტრად იღებს By-ს (რამე ლოკატორს), აბრუნებს ElementsCollection-ს).
+        // როდის ვიყენებთ? - როდესაც გვაქვს ერთეულოვანი ვებელემენტი და გვინდა მასში მოვძებნოთ *რამდენიმე* ელემენტი.
+        // SelenideElement-საც აქვს find მეთოდი, ოღონდ ის პარამეტრად იღებს By-ს და არა WebElementConditions.
+        ElementsCollection anchorLinks = navBar.findAll(byTagName("a")); // ჩათვალეთ, რომ $$ და findAll ერთი და იგივეა.
 
-        ElementsCollection anchorTagsContainingA = anchorTags.filter(Condition.partialText("a"));
-//        ElementsCollection anchorTagsContainingA = anchorTags.filter(textOfLength(8));
+        // filter (წვდომადია მხოლოდ ElementsCollection-ის ობიექტებიდან მხოლოდ,
+        // პარამეტრად იღებს WebElementCondition-ს, აბრუნებს კოლექციას)
+        // როდის ვიყენებთ? - როცა გვაქვს კოლექცია და აქედან გვინდა გავფილტროთ ელემენტები რაღაც ქონდიშენის საფუძველზე
+        // და ისევ კოლექცია მივიღოთ (გაფილტრული)
+        ElementsCollection someKindOfAnchorLinks = navBar.findAll(byTagName("a"))
+                .filter(Condition.partialText("p")); // მოგვაქვს ყველა ენქორ ტეგი, რომლის ტექსტიც შეიცავს p-ს.
+
     }
 
     public static WebElementCondition textOfLength(int expectedLength){
