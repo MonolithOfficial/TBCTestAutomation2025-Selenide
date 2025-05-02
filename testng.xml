@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<!--BEFORESUITE-->
+<suite name="testExecution" thread-count="2" parallel="tests" preserve-order="true">
+<!--    BEFORETEST-->
+    <test name="someKindOfTest">
+        <classes>
+            <!--        BEFORECLASS-->
+            <class name="SelenideTest">
+                <methods>
+                    <exclude name="locatorsTest"/>
+                </methods>
+<!--                <methods>-->
+<!--&lt;!&ndash;                    BEFOREMETHOD&ndash;&gt;-->
+<!--                    <include name="waitTest"/>-->
+<!--                </methods>-->
+            </class>
+            <!--        BEFORECLASS-->
+<!--            <class name="SelenideTest">-->
+<!--                <methods>-->
+<!--                    &lt;!&ndash;                    BEFOREMETHOD&ndash;&gt;-->
+<!--                    <include name="waitTest"/>-->
+<!--                    &lt;!&ndash;                    AFTERMETHOD&ndash;&gt;-->
+<!--                </methods>-->
+<!--            </class>-->
+<!--            AFTERCLASS-->
+        </classes>
+<!--        AFTERTEST-->
+    </test>
+</suite>
