@@ -1,3 +1,5 @@
+package ge.tbc.testautomation;
+
 import com.codeborne.selenide.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;

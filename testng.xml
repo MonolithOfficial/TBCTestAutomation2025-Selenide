@@ -8,7 +8,7 @@
     <test name="someKindOfTest">
         <classes>
             <!--        BEFORECLASS-->
-            <class name="SelenideTest">
+            <class name="ge.tbc.testautomation.SelenideTest">
                 <methods>
                     <exclude name="locatorsTest"/>
                 </methods>
@@ -18,7 +18,7 @@
 <!--                </methods>-->
             </class>
             <!--        BEFORECLASS-->
-<!--            <class name="SelenideTest">-->
+<!--            <class name="ge.tbc.testautomation.SelenideTest">-->
 <!--                <methods>-->
 <!--                    &lt;!&ndash;                    BEFOREMETHOD&ndash;&gt;-->
 <!--                    <include name="waitTest"/>-->

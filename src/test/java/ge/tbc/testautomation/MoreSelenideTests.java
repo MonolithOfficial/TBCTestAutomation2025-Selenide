@@ -1,3 +1,5 @@
+package ge.tbc.testautomation;
+
 import com.codeborne.selenide.*;
 import com.codeborne.selenide.ex.FileNotDownloadedError;
 import io.github.bonigarcia.wdm.WebDriverManager;
