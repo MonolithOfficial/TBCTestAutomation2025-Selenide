@@ -2,6 +2,8 @@ package ge.tbc.testautomation;
 
 import com.codeborne.selenide.*;
 import com.codeborne.selenide.ex.FileNotDownloadedError;
+import ge.tbc.testautomation.util.RetryAnalyzer;
+import ge.tbc.testautomation.util.RetryCount;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -17,6 +19,7 @@ import static com.codeborne.selenide.Selectors.byId;
 import static com.codeborne.selenide.Selectors.byTagName;
 import static com.codeborne.selenide.Selenide.*;
 
+@Test(groups = {"SelenideTests"})
 public class MoreSelenideTests {
     @BeforeClass
     public void setUp() {
@@ -25,7 +28,8 @@ public class MoreSelenideTests {
         Configuration.timeout = 10000;
     }
 
-    @Test
+    @Test(groups = {"File Handling"})
+    @RetryCount(count = 10)
     public void fileUpload() {
         open("https://the-internet.herokuapp.com/upload");
         SelenideElement fileUploadInput = $(byId("file-upload"));
@@ -36,7 +40,8 @@ public class MoreSelenideTests {
         uploadButton.click();
     }
 
-    @Test
+    @Test(groups = {"File Handling"}, retryAnalyzer = RetryAnalyzer.class)
+    @RetryCount(count = 10)
     public void fileDownload() {
         open("https://the-internet.herokuapp.com/download");
         SelenideElement session6DownloadLink = $x("//a[@href='download/Session6.pdf']");

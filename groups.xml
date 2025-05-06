@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="groupsTest">
+    <test name="File Handling Tests">
+        <groups>
+            <define name="all">
+                <include name="SelenideTests"/>
+                <include name="File Handling"/>
+            </define>
+            <define name="File Handling"/>
+            <define name="SelenideTests"/>
+            <run>
+                <include name="all"/>
+<!--                <include name="SelenideTests"/>-->
+<!--                <exclude name="File Handling"/>-->
+            </run>
+        </groups>
+        <packages>
+            <package name="ge.tbc.testautomation"/>
+        </packages>
+    </test>
+
+</suite>
